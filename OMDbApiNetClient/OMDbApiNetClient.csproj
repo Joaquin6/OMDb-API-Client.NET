@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>Joaquin6</Authors>
     <Company />
     <Description>OMDbApiNetClient is a .NET Standard 2.0 REST client for the Open Movie Database API (http://www.omdbapi.com/) to obtain IMDb data.</Description>
