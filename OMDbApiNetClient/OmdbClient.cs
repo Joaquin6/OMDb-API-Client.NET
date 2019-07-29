@@ -187,11 +187,11 @@ namespace OMDbApiNetClient
         {
             if (seasonNumber <= 0)
             {
-                throw new ArgumentOutOfRangeException("Season number has to be greater than zero.", nameof(seasonNumber));
+                throw new ArgumentOutOfRangeException(nameof(seasonNumber), "Season number has to be greater than zero.");
             }
             if (episodeNumber <= 0)
             {
-                throw new ArgumentOutOfRangeException("Episode number has to be greater than zero.", nameof(episodeNumber));
+                throw new ArgumentOutOfRangeException(nameof(episodeNumber), "Episode number has to be greater than zero.");
             }
 
             var query = GetSeasonEpisodeQuery(seriesId, seriesTitle, seasonNumber, episodeNumber);
@@ -210,7 +210,7 @@ namespace OMDbApiNetClient
         {
             if (seasonNumber <= 0)
             {
-                throw new ArgumentOutOfRangeException("Season number has to be greater than zero.", nameof(seasonNumber));
+                throw new ArgumentOutOfRangeException(nameof(seasonNumber), "Season number has to be greater than zero.");
             }
 
             var query = GetSeasonEpisodeQuery(seriesId, seriesTitle, seasonNumber, null);

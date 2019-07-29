@@ -28,7 +28,7 @@ namespace OMDbApiNetClient.Utilities
 				}
 				else
 				{
-					throw new ArgumentOutOfRangeException("Year has to be greater than 1800.", nameof(year));
+					throw new ArgumentOutOfRangeException(nameof(year), "Year has to be greater than 1800.");
 				}
 			}
 
@@ -63,7 +63,7 @@ namespace OMDbApiNetClient.Utilities
 
 			if (page <= 0)
 			{
-				throw new ArgumentOutOfRangeException("Page has to be greater than zero.", nameof(page));
+				throw new ArgumentOutOfRangeException(nameof(page), "Page has to be greater than zero.");
 			}
 
 			var editedQuery = $"&s={Regex.Replace(query, @"\s+", "+")}&page={page}";
@@ -81,7 +81,7 @@ namespace OMDbApiNetClient.Utilities
 				}
 				else
 				{
-					throw new ArgumentOutOfRangeException("Year has to be greater than 1800.", nameof(year));
+					throw new ArgumentOutOfRangeException(nameof(year), "Year has to be greater than 1800.");
 				}
 			}
 
