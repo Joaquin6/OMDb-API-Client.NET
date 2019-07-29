@@ -31,6 +31,7 @@ namespace TestOMDbApiNetClient
             Assert.Equal("True", searchList.Response);
         }
 
+        [Fact]
         public void TestGetSearchListGood2()
         {
             var omdb = new OmdbClient(TestData.apikey);
