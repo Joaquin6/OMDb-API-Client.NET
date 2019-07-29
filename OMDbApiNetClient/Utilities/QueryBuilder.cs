@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace OMDbApiNet.Utilities
+namespace OMDbApiNetClient.Utilities
 {
 	/// <summary>
 	/// This class contains the methods for building the query to be sent to OMDb.
@@ -46,7 +46,7 @@ namespace OMDbApiNet.Utilities
 			{
 				throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 			}
-            
+
 			var plot = fullPlot ? "full" : "short";
 
 			var query = $"&i={id}&plot={plot}";
@@ -60,14 +60,14 @@ namespace OMDbApiNet.Utilities
 			{
 				throw new ArgumentException("Value cannot be null or whitespace.", nameof(query));
 			}
-            
+
 			if (page <= 0)
 			{
 				throw new ArgumentOutOfRangeException("Page has to be greater than zero.", nameof(page));
 			}
 
 			var editedQuery = $"&s={Regex.Replace(query, @"\s+", "+")}&page={page}";
-            
+
 			if (type != OmdbType.None)
 			{
 				editedQuery += $"&type={type.ToString()}";
@@ -97,7 +97,7 @@ namespace OMDbApiNet.Utilities
 
 			return $"&i={episodeId}";
 		}
-		
+
 		public static string GetSeasonEpisodeQuery(string seriesId, string seriesTitle, int seasonNumber, int? episodeNumber)
 		{
 			string query;
@@ -105,7 +105,7 @@ namespace OMDbApiNet.Utilities
 			if (seriesId != null)
 			{
 				query = $"&i={seriesId}";
-			} 
+			}
 			else if (seriesTitle != null)
 			{
 				query = $"&t={seriesTitle}";

@@ -1,4 +1,4 @@
-namespace TestOmdbApiNet
+namespace TestOMDbApiNetClient
 {
 	public static class TestData
 	{

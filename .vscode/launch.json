@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/OMDbApiNet.Test/bin/Debug/netcoreapp2.0/OMDbApiNet.Test.dll",
+            "program": "${workspaceFolder}/OMDbApiNetClient.Test/bin/Debug/netcoreapp2.0/OMDbApiNetClient.Test.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/OMDbApiNet.Test",
+            "cwd": "${workspaceFolder}/OMDbApiNetClient.Test",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

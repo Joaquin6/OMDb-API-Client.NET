@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace OMDbApiNet.Model
+namespace OMDbApiNetClient.Model
 {
     public class SearchItem
     {
@@ -25,13 +25,13 @@ namespace OMDbApiNet.Model
     {
         [JsonProperty("Search")]
         public List<SearchItem> SearchResults { get; set; }
-        
+
         [JsonProperty("totalResults")]
         public string TotalResults { get; set; }
-        
+
         [JsonProperty("Response")]
         public string Response { get; set; }
-        
+
         [JsonProperty("Error")]
         public string Error { get; set; }
     }

@@ -1,9 +1,9 @@
 using System;
 using System.Net.Http;
 using Xunit;
-using OMDbApiNet;
+using OMDbApiNetClient;
 
-namespace TestOmdbApiNet
+namespace TestOMDbApiNetClient
 {
 	/*
      * Data in these unit tests last checked on 02/02/2019 (American date format).
@@ -35,7 +35,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public async void TestGetEpisodeBySeriesIdBad()
         {
@@ -44,16 +44,16 @@ namespace TestOmdbApiNet
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesIdAsync(null, 1, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesIdAsync("", 1, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesIdAsync(" ", 1, 1));
-            
+
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesIdAsync("tt2193021", 0, 1));
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesIdAsync("tt2193021", 1, 0));
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesIdAsync("tt2193021", 0, 0));
-            
+
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesIdAsync("asdf", 1, 1));
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesIdAsync("tt2193021", 100, 1));
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesIdAsync("tt2193021", 1, 100));
         }
-        
+
         [Fact]
         public async void TestGetEpisodeBySeriesTitleGood()
         {
@@ -79,7 +79,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public async void TestGetEpisodeBySeriesTitleBad()
         {
@@ -88,16 +88,16 @@ namespace TestOmdbApiNet
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesTitleAsync(null, 1, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesTitleAsync("", 1, 1));
             await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetEpisodeBySeriesTitleAsync(" ", 1, 1));
-            
+
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitleAsync("arrow", 0, 1));
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitleAsync("arrow", 1, 0));
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitleAsync("arrow", 0, 0));
-            
+
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitleAsync("asdf", 1, 1));
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitleAsync("arrow", 100, 1));
             await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitleAsync("arrow", 1, 100));
         }
-        
+
         [Fact]
         public async void TestGetEpisodeByEpisodeIdGood()
         {
@@ -123,7 +123,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public async void TestGetEpisodeByEpisodeIdBad()
         {

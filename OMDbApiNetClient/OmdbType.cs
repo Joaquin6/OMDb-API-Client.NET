@@ -1,9 +1,10 @@
-namespace OMDbApiNet
+namespace OMDbApiNetClient
 {
 	public enum OmdbType
 	{
 		None,
 		Movie,
-		Series
+		Series,
+		Game
 	}
 }

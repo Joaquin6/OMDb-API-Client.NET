@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using Xunit;
-using OMDbApiNet;
+using OMDbApiNetClient;
 
-namespace TestOmdbApiNet
+namespace TestOMDbApiNetClient
 {
     /*
      * Data in these unit tests last checked on 02/02/2019 (American date format).
@@ -35,7 +35,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public void TestGetEpisodeBySeriesIdBad()
         {
@@ -44,16 +44,16 @@ namespace TestOmdbApiNet
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesId(null, 1, 1));
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesId("", 1, 1));
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesId(" ", 1, 1));
-            
+
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesId("tt2193021", 0, 1));
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesId("tt2193021", 1, 0));
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesId("tt2193021", 0, 0));
-            
+
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesId("asdf", 1, 1));
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitle("tt2193021", 100, 1));
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitle("tt2193021", 1, 100));
         }
-        
+
         [Fact]
         public void TestGetEpisodeBySeriesTitleGood()
         {
@@ -79,7 +79,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public void TestGetEpisodeBySeriesTitleBad()
         {
@@ -88,16 +88,16 @@ namespace TestOmdbApiNet
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesTitle(null, 1, 1));
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesTitle("", 1, 1));
             Assert.Throws<ArgumentException>(() => omdb.GetEpisodeBySeriesTitle(" ", 1, 1));
-            
+
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitle("arrow", 0, 1));
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitle("arrow", 1, 0));
             Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetEpisodeBySeriesTitle("arrow", 0, 0));
-            
+
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitle("asdf", 1, 1));
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitle("arrow", 100, 1));
             Assert.Throws<HttpRequestException>(() => omdb.GetEpisodeBySeriesTitle("arrow", 1, 100));
         }
-        
+
         [Fact]
         public void TestGetEpisodeByEpisodeIdGood()
         {
@@ -123,7 +123,7 @@ namespace TestOmdbApiNet
             Assert.Equal("episode", episode.Type);
             Assert.Equal("True", episode.Response);
         }
-        
+
         [Fact]
         public void TestGetEpisodeByEpisodeIdBad()
         {

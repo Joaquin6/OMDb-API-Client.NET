@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using OMDbApiNet.Model;
-using OMDbApiNet.Utilities;
+using OMDbApiNetClient.Model;
+using OMDbApiNetClient.Utilities;
 
-namespace OMDbApiNet
+namespace OMDbApiNetClient
 {
     public class OmdbClient : IOmdbClient
     {
         private const string BaseUrl = "http://www.omdbapi.com/?";
         private readonly string _apikey;
         private readonly bool _rottenTomatoesRatings;
-        
+
         public OmdbClient(string apikey, bool rottenTomatoesRatings = false)
         {
             _apikey = apikey;
@@ -49,21 +48,21 @@ namespace OMDbApiNet
             {
                 throw new HttpRequestException(item.Error);
             }
-            
+
             return item;
         }
 
         public Item GetItemById(string id, bool fullPlot = false)
         {
             var query = QueryBuilder.GetItemByIdQuery(id, fullPlot);
-            
+
             var item = GetOmdbDataAsync<Item>(query).Result;
-            
+
             if (item.Response.Equals("False"))
             {
                 throw new HttpRequestException(item.Error);
             }
-            
+
             return item;
         }
 
@@ -71,7 +70,7 @@ namespace OMDbApiNet
         {
             return GetSearchList(null, query, OmdbType.None, page);
         }
-        
+
         public SearchList GetSearchList(string query, OmdbType type, int page = 1)
         {
             return GetSearchList(null, query, type, page);
@@ -87,12 +86,12 @@ namespace OMDbApiNet
             var editedQuery = QueryBuilder.GetSearchListQuery(year, query, type, page);
 
             var searchList = GetOmdbDataAsync<SearchList>(editedQuery).Result;
-            
+
             if (searchList.Response.Equals("False"))
             {
                 throw new HttpRequestException(searchList.Error);
             }
-            
+
             return searchList;
         }
 
@@ -119,14 +118,14 @@ namespace OMDbApiNet
         public Episode GetEpisodeByEpisodeId(string episodeId)
         {
             var query = QueryBuilder.GetEpisodeByEpisodeIdQuery(episodeId);
-            
+
             var episode = GetOmdbDataAsync<Episode>(query).Result;
-            
+
             if (episode.Response.Equals("False"))
             {
                 throw new HttpRequestException(episode.Error);
             }
-            
+
             return episode;
         }
 
@@ -139,7 +138,7 @@ namespace OMDbApiNet
 
             return GetSeason(seriesId, null, seasonNumber);
         }
-        
+
         public Season GetSeasonBySeriesTitle(string seriesTitle, int seasonNumber)
         {
             if (string.IsNullOrWhiteSpace(seriesTitle))
@@ -151,7 +150,7 @@ namespace OMDbApiNet
         }
 
         #endregion
-        
+
         #region Internal
 
         private async Task<T> GetOmdbDataAsync<T>(string query)
@@ -164,26 +163,26 @@ namespace OMDbApiNet
                 var response = await client
                     .GetAsync($"{BaseUrl}apikey={_apikey}{query}&tomatoes={_rottenTomatoesRatings}")
                     .ConfigureAwait(false);
-            
+
                 if (!response.IsSuccessStatusCode)
                 {
                     return default(T);
                 }
-            
+
                 var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
                     DateParseHandling = DateParseHandling.None,
-                    Error = delegate(object sender, ErrorEventArgs args) 
-                    { 
+                    Error = delegate(object sender, ErrorEventArgs args)
+                    {
                         var currentError = args.ErrorContext.Error.Message;
                         args.ErrorContext.Handled = true;
                     }
                 });
             }
         }
-        
+
         private Episode GetEpisode(string seriesId, string seriesTitle, int seasonNumber, int episodeNumber)
         {
             if (seasonNumber <= 0)
@@ -196,14 +195,14 @@ namespace OMDbApiNet
             }
 
             var query = GetSeasonEpisodeQuery(seriesId, seriesTitle, seasonNumber, episodeNumber);
-            
+
             var episode = GetOmdbDataAsync<Episode>(query).Result;
-            
+
             if (episode.Response.Equals("False"))
             {
                 throw new HttpRequestException(episode.Error);
             }
-            
+
             return episode;
         }
 
@@ -215,14 +214,14 @@ namespace OMDbApiNet
             }
 
             var query = GetSeasonEpisodeQuery(seriesId, seriesTitle, seasonNumber, null);
-            
+
             var season = GetOmdbDataAsync<Season>(query).Result;
-            
+
             if (season.Response.Equals("False"))
             {
                 throw new HttpRequestException(season.Error);
             }
-            
+
             return season;
         }
 
@@ -233,7 +232,7 @@ namespace OMDbApiNet
             if (seriesId != null)
             {
                 query = $"&i={seriesId}";
-            } 
+            }
             else if (seriesTitle != null)
             {
                 query = $"&t={seriesTitle}";
@@ -252,7 +251,7 @@ namespace OMDbApiNet
 
             return query;
         }
-        
+
         #endregion
     }
 }

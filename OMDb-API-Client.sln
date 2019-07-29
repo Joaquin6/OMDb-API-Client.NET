@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8AF603AA-4713-464A-99B6-BF2EC4BB0A42}") = "OMDbApiNetClient", "OMDbApiNetClient\OMDbApiNetClient.csproj", "{D2C45B88-3E78-4E1D-A8D2-BAFF50B26957}"
+EndProject
+Project("{6B89C43F-E470-42B7-8865-8E80F68C16EE}") = "OMDbApiNetClient.Test", "OMDbApiNetClient.Test\OMDbApiNetClient.Test.csproj", "{61C4CF6F-9700-4E8F-8C54-3E8FC5E4F498}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23176E90-6B13-43B1-ADAA-0D42D9415247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23176E90-6B13-43B1-ADAA-0D42D9415247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23176E90-6B13-43B1-ADAA-0D42D9415247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23176E90-6B13-43B1-ADAA-0D42D9415247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977AD600-C9BE-4ED8-9E68-8D794ADF692B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977AD600-C9BE-4ED8-9E68-8D794ADF692B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977AD600-C9BE-4ED8-9E68-8D794ADF692B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FC78A6A-72AA-4D9B-A2F6-296EF5429A90}
+	EndGlobalSection
+EndGlobal

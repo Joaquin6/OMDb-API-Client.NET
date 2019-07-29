@@ -1,26 +1,26 @@
 using System;
 using System.Net.Http;
 using Xunit;
-using OMDbApiNet;
+using OMDbApiNetClient;
 
-namespace TestOmdbApiNet
+namespace TestOMDbApiNetClient
 {
-	/*
+    /*
      * Data in these unit tests last checked on 02/02/2019 (American date format).
      */
-	public class ItemAsyncTest
-	{
-		[Fact]
-        public async void TestGetItemByTitleGood1()
+    public class ItemTest
+    {
+        [Fact]
+        public void TestGetItemByTitleGood1()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey);
-            var movie = await omdb.GetItemByTitleAsync("Star Wars", true);
-            
+            var omdb = new OmdbClient(TestData.apikey);
+            var movie = omdb.GetItemByTitle("Star Wars", true);
+
             var ratings = movie.Ratings.ToArray();
             Assert.Equal("Internet Movie Database", ratings[0].Source);
             Assert.Equal("Rotten Tomatoes", ratings[1].Source);
             Assert.Equal("Metacritic", ratings[2].Source);
-            
+
             Assert.Equal("Star Wars: Episode IV - A New Hope", movie.Title);
             Assert.Equal("1977", movie.Year);
             Assert.Equal("PG", movie.Rated);
@@ -35,21 +35,21 @@ namespace TestOmdbApiNet
             Assert.Equal("21 Sep 2004", movie.Dvd);
             Assert.Equal("20th Century Fox", movie.Production);
             Assert.Equal("http://www.starwars.com/episode-iv/", movie.Website);
-            Assert.Equal(null, movie.TotalSeasons);
+            Assert.Null(movie.TotalSeasons);
             Assert.Equal("True", movie.Response);
         }
-        
+
         [Fact]
-        public async void TestGetItemByTitleGood2()
+        public void TestGetItemByTitleGood2()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey, true);
-            var movie = await omdb.GetItemByTitleAsync("Star Wars", OmdbType.Movie, 2017, false);
-            
+            var omdb = new OmdbClient(TestData.apikey, true);
+            var movie = omdb.GetItemByTitle("Star Wars", OmdbType.Movie, 2017, false);
+
             var ratings = movie.Ratings.ToArray();
             Assert.Equal("Internet Movie Database", ratings[0].Source);
             Assert.Equal("Rotten Tomatoes", ratings[1].Source);
             Assert.Equal("Metacritic", ratings[2].Source);
-            
+
             Assert.Equal("Star Wars: Episode VIII - The Last Jedi", movie.Title);
             Assert.Equal("2017", movie.Year);
             Assert.Equal("PG-13", movie.Rated);
@@ -61,19 +61,19 @@ namespace TestOmdbApiNet
             Assert.Equal("movie", movie.Type);
             Assert.Equal("http://www.rottentomatoes.com/m/star_wars_episode_viii/", movie.TomatoUrl);
             Assert.Equal("Walt Disney Pictures", movie.Production);
-            Assert.Equal(null, movie.TotalSeasons);
+            Assert.Null(movie.TotalSeasons);
             Assert.Equal("True", movie.Response);
         }
-        
+
         [Fact]
-        public async void TestGetItemByTitleGood3()
+        public void TestGetItemByTitleGood3()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey, true);
-            var movie = await omdb.GetItemByTitleAsync("Arrow", OmdbType.Series, 2012, false);
-            
+            var omdb = new OmdbClient(TestData.apikey, true);
+            var movie = omdb.GetItemByTitle("Arrow", OmdbType.Series, 2012, false);
+
             var ratings = movie.Ratings.ToArray();
             Assert.Equal("Internet Movie Database", ratings[0].Source);
-            
+
             Assert.Equal("Arrow", movie.Title);
             Assert.Equal("2012–", movie.Year);
             Assert.Equal("TV-14", movie.Rated);
@@ -89,29 +89,39 @@ namespace TestOmdbApiNet
             Assert.Equal("N/A", movie.Website);
             Assert.Equal("True", movie.Response);
         }
-        
+
         [Fact]
-        public async void TestGetItemByTitleBad()
+        public void TestGetItemByTitleBad()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey, true);
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByTitleAsync(null));
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByTitleAsync(""));
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByTitleAsync(" "));
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => omdb.GetItemByTitleAsync("star wars", 1500));
+            var omdb = new OmdbClient(TestData.apikey, true);
+            Assert.Throws<ArgumentException>(() => omdb.GetItemByTitle(null));
+            Assert.Throws<ArgumentException>(() => omdb.GetItemByTitle(""));
+            Assert.Throws<ArgumentException>(() => omdb.GetItemByTitle(" "));
+            Assert.Throws<ArgumentOutOfRangeException>(() => omdb.GetItemByTitle("star wars", 1500));
         }
-        
+
+        /// <summary>
+        /// Games can't be requested by title. See #2
+        /// </summary>
         [Fact]
-        public async void TestGetItemByIdGood()
+        public void TestGetItemByTitleBad2()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey);
-            var movie = await omdb.GetItemByIdAsync("tt0076759", true);
-            
+            var omdb = new OmdbClient(TestData.apikey, true);
+            Assert.Throws<HttpRequestException>(() => omdb.GetItemByTitle("Skyrim", OmdbType.Game));
+        }
+
+
+        [Fact]
+        public void TestGetItemByIdGood()
+        {
+            var omdb = new OmdbClient(TestData.apikey);
+            var movie = omdb.GetItemById("tt0076759", true);
+
             var ratings = movie.Ratings.ToArray();
             Assert.Equal("Internet Movie Database", ratings[0].Source);
             Assert.Equal("Rotten Tomatoes", ratings[1].Source);
             Assert.Equal("Metacritic", ratings[2].Source);
-            
-            Assert.Equal("Star Wars: Episode IV - A New Hope", movie.Title);
+            Assert.Equal("Star Wars: The Last Jedi", movie.Title);
             Assert.Equal("1977", movie.Year);
             Assert.Equal("PG", movie.Rated);
             Assert.Equal("25 May 1977", movie.Released);
@@ -129,14 +139,27 @@ namespace TestOmdbApiNet
         }
 
         [Fact]
-        public async void TestGetItemByIdBad()
+        public void TestGetItemByIdGood2()
         {
-            var omdb = new AsyncOmdbClient(TestData.apikey);
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByIdAsync(null));
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByIdAsync(""));
-            await Assert.ThrowsAsync<ArgumentException>(() => omdb.GetItemByIdAsync(" "));
-            
-            await Assert.ThrowsAsync<HttpRequestException>(() => omdb.GetItemByIdAsync("wrongID"));
+            var omdb = new OmdbClient(TestData.apikey, true);
+            var game = omdb.GetItemById("tt1814884");
+
+             Assert.Equal("The Elder Scrolls V: Skyrim", game.Title);
+            Assert.Equal("2011", game.Year);
+            Assert.Equal("N/A", game.Rated);
+            Assert.Equal("11 Nov 2011", game.Released);
+            Assert.Equal("N/A", game.Runtime);
         }
-	}
+
+        [Fact]
+        public void TestGetItemByIdBad()
+        {
+            var omdb = new OmdbClient(TestData.apikey);
+            Assert.Throws<ArgumentException>(() => omdb.GetItemById(null));
+            Assert.Throws<ArgumentException>(() => omdb.GetItemById(""));
+            Assert.Throws<ArgumentException>(() => omdb.GetItemById(" "));
+
+            Assert.Throws<HttpRequestException>(() => omdb.GetItemById("wrongID"));
+        }
+    }
 }

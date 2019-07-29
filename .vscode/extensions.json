@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "netcorext.uuid-generator",
+        "jmrog.vscode-nuget-package-manager",
+        "eridem.vscode-nupkg",
+        "fforjan.nuget4code",
+        "tintoy.msbuild-project-tools"
+    ]
+}

@@ -11,6 +11,6 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OMDbApiNet\OMDbApiNet.csproj" />
+    <ProjectReference Include="..\OMDbApiNetClient\OMDbApiNetClient.csproj" />
   </ItemGroup>
 </Project>
